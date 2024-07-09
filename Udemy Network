@@ -1,0 +1,230 @@
+Mac (Media Acces Contol) 48bit; Ethernet addres - Phsical addres - Hardware addres olarak geçebilir. IEEE network kartı üreticilerine, mac adreslerinin ilk 24 bitini verir. 
+
+Çapraz kablolar; aynı cihazlar arasına (sw-sw, router-router...)
+Düz kabloalr; farklı cihazlar arasına (Sw-Router, Sw-PC...) 
+MDIX; düz ya da çapraz olması önemsenmeden haberleşme sağlanır. 
+
+Ethernet Çerçevesi
+Preable (7 byte), SFD (1), Destination (6), Source (6), Type (2), Data and Pad (46-1500), FCS (4)
+Preable; 
+SFD 1byte; çerçeve sınırlayıcısı alanı
+Destination 6byte; Hedef mac adresi
+Source 6byte; gönderen mac adresi
+Type 2byte; protokol türü (IPv4,Ipv6...)
+Data and Pad 46-1500byte; üst katmanlardan gelen kapsüllenmiş veri
+Frame Check Secons (FCS) 4byte; Çerçevedeki hataları kontrol etmek için. Önce veri gönderen cihaz FCS hesaplar, yazar ve gönderir. Sonra alan cihaz frames'in FCS değerini hesaplar ve gönderen cihazdaki FCS değeri ile karşılaştırır. İki değer tutarsa çerçeveyi alır. Eğer bozulmuşsa çerçeveyi siler. 
+
+Unicast; 1 cihaza yayın
+Multicast; ağdaki bir grup cihaza yayın
+Broadcast; tüm ağa yayın
+Alıcı cihazın mac adresi 'ffff.ffff.ffff' kullanılarak yapılırlar. 
+
+IPv4 Başlık Adres Alma (Görsel altta)
+verison; 4 (0100) mü 6 (0110) mı bilgisi
+Time To Lİve; paket ömrünü belirler. 0'a düşerse droplanır.
+Protocol; TCP,UDP,ICMG gibi 
+Source IP; gönderen cihaz IP adresi
+Destination IP; alacak cihaz IP adresi
+
+IP Adres Sınıfları (Görselde)
+IFT tarafından Class inter domain routing (Sınırsız adresleme) geliştirildi. Böylece A sınıfı IP adresine B sınıfı subnetmask atanabilir.
+Genel IP adresleri; internette kullanılır
+		- A sınıfı: 1.0.0.0-126.255.255.255
+		- B sınıfı: 128.0.0.0-191.255.255.255
+		- C sınıfı: 192.0.0.0-223.255.255.255
+Not: 127 ile başlayan adresler loopback (geri döngü test) adresler olarak kullanılır
+Özel IP adresleri; İnternete çıkmayan adreslerdir. İnternete çıkması için NAT (Network Adres Transformation) işleminden geçer 
+		- A sınıfı: 10.0.0.0-10.255.255.255
+		- B sınıfı: 172.16.0.0-172.31.255.255
+		- C sınıfı: 192.168.0.0-192.168.255.255
+	
+DNS
+Cihazdaki kayıtlı dns çözümlemeleri dns cashe'de bulunur. Eğer cihazda kayıtlı değilse dns sunucusundan domain için ip adresi sorulur. 
+Windeos cihaz için;
+		>ipconfig/displaydns | more
+				Windows IP Configuration
+		    array510.prod.do.dsp.mp.microsoft.com
+		    ----------------------------------------
+		    Record Name . . . . . : array510.prod.do.dsp.mp.microsoft.com
+		    Record Type . . . . . : 1
+		    Time To Live  . . . . : 2432
+		    Data Length . . . . . : 4
+		    Section . . . . . . . : Answer
+		    A (Host) Record . . . : 52.167.167.111
+Cihazda yapılandırılan dns sunucusundan sorgu yapılabilinir. 
+		>nslookup wwww.cisco.com
+				Server:  MitraStar.Home
+				Address:  192.168.1.1
+				*** MitraStar.Home can't find wwww.cisco.com: Non-existent domain
+		
+				C:\Users\alp13>nslookup catalog.gamepass.com.edgesuite.net
+				Server:  MitraStar.Home
+				Address:  192.168.1.1
+				Non-authoritative answer:
+				Name:    a1992.dscd.akamai.net
+				Addresses:  2a02:26f0:cb00::c3af:b23a
+				          2a02:26f0:cb00::c3af:b20b
+				          195.175.178.83
+				          195.175.178.11
+				Aliases:  catalog.gamepass.com.edgesuite.net
+				
+Subneting
+Ip bloğunun subnet mask ile daha küçük gruplara bölünmesi.
+vlsm ile değişken uzunluklarda alt ağlara bölünebilinir.
+				
+Transport Layer
+				
+				
+Not: broadcast ve collision domainler sınavda çıkabilir
+Routerleri ayarları broadcast domain
+Swich ayakları collision domain 
+				
+Router 
+ağlar arası trafiği yönlendirebilir.
+broadcast trafiğini geçirmezler. Böylece ağ trafiği azaltılabilinir.
+		Router# show ip route
+				komutu ile routerdeki yönlendirme tablosuna bakılabilinir.
+				iplerin yanında harf yazıyorsa; b kodun başlangıç kısmındaki gibi bu networkü nasıl ögrendiğidir.
+				S* ise varsayılan rotadır; 0.0.0.0/0 ile hedef ne olursa olsun yanında yazan ip bloğuna yönlendirir.
+
+### Yol seçimi
+Sıçrama (geçilen router miktarı) sayısı en az yol seçilebilinir (Rip)
+
+### Administrative Distance
+Bir paket yönlendirilirken rotanın güvenliğidir ve ne kadar düğüşse tercih edilir.
+olun birden fazla şekilde öğrenilmesi durumunda düşük riskli olan yol seçilir.
+
+Rota Kaynağı                             Yönetimsel Uzaklık
+Direk Bağlı Rota (Connected route)       0
+Statik Rota (Static route)               1
+EIGRP özet rota (EIGRP summary route)    5
+Dış BGP (Exterior BC,P)                  20
+iç EIGRP                                 90
+OSPF                                     110
+ıs-ıs                                    115
+RIP                                      120
+Dış EIGRP (Exterior EIGRP)               170
+iç BGP (Interior BGP)                    200
+
+Sınav için;
+Rota Kaynağı                             Yönetimsel Uzaklık
+Direk Bağlı Rota (Connected route)       0
+Statik Rota (Static route)               1
+iç EIGRP                                 90
+OSPF                                     110
+RIP                                      120
+
+CDP (Cisco Discovery Protocol) (layer 2) & LLDP (Link Layer Discovery Protocol) (layer 2)
+CDP cisco cihazların birbirini tanıması için olan protoköl
+		Swich#show cdp
+cdp protokölün ayarları gösterir
+		Swich#show cdp neighbors
+swiche bağlı cihazları görür
+		Swich(config)#no cdp run
+cihazdaki cdp'yi kapatır
+		Swich(config)#int fast 0/x
+		Swich(config-if)#no cdp enable
+belli bi portun cdp'sini kapattık
+
+LLDP farklı cihazların olduğu topologi'de komşuları tanır.
+Birbirine bağlı cihazda `lldp run` komutu ile swichlerde açılması grekebilir
+		Swich#show lldp neighbors
+
+arp (Adres Çözümleme Protokolü) (layer 3)
+local area networkde ip'si bilinen cihazın mac adresini öğrenmek için kullanılır.
+her cihazda arp tablosu vardır. Windowsda `arp -a` komutu ile bakılır
+arp paketinded kaynak cihazın ip ve mac adresi, hedef cihazın ipsi ve hedef cihaz için 'ffff.ffff.fffff' mac adresi yazar. ff ile ağa broadcast yayını yapmış olur. 
+hedef cihazın ipsi farklı ağdaysa o zaman arp ile defaultgateway'in mac adresi öğrenilir. router hedef cihazın mac adresini bilmiyorsa arp request yaparak öğrenir. Burada mac bilinmediğinden paket gönderilmeyebilir ama sonrasında tekrar bir istek gelince mac adresi bilindiğinden gönderecektir. 
+
+Cihazlarda int 0/0 demesi ilk '0' kendisi olduğu 2. '0' ise port numarasıdır.
+Cihazlarda int 0/0/0 demesi ilk '0' kendisi olduğu 2. '0' ise cihaza takılmış slotu (modül) 3. '0'da modülün portunu ifade eder
+
+Router default gateway ataması
+		Router(config)#int gi0/1
+routerin portuna girdik
+		Router(config)#ip add 192.168.1.1 255.255.255.0
+porta defaukt gateway atadık
+		Router(config)#no sh
+portu aktif ettik
+
+Router statik yönlendirme
+		Router(config)#ip route 192.168.1.0 255.255.255.0 1.1.1.2
+		Router(config)#ip route 192.168.2.0 255.255.255.0 1.1.1.2
+192.168.1.0 255.255.255.0 ve 192.168.2.0 255.255.255.0 networkü 1.1.1.2 ipli routerin arkasında
+		Router(config)#ip route 0.0.0.0 0.0.0.0 1.1.1.1
+ne olursa olsun (ip ve subnete bakmaksızın) 1.1.1.1 ip'li routere yönlendir
+		Router#show ip route
+routerde kayıtlı ağ yönlendirmelerine bakabiliriz
+
+routere ip özetleme
+		Router(config)#ip route 192.168.1.0 255.255.255.0 1.1.1.2
+		Router(config)#ip route 192.168.2.0 255.255.255.0 1.1.1.2
+		Router(config)#ip route 192.168.3.0 255.255.255.0 1.1.1.2
+		Router(config)#ip route 192.168.4.0 255.255.255.0 1.1.1.2
+yerine 
+		Router(config)#ip route 192.168.0.0 255.255.252.0 1.1.1.2
+yazılabilinir
+çünkü; 192.168.0.0/22 (255.255.252.0) networkü üsteki 4 ip bloğunu kaplamaktadır.
+
+ACL (Access Control List) (Erişim denetim listesi)
+router, swichlerde firewall gibi belli kısıtlamaları yapılabilmektedir.
+---
+Eksik
+---
+
+DHCP (Dynamic Host Configuration Protocol) 
+ip adresi, subnet mask, default gateway, dns server bilgilerinin host'un almasını sağlar.
+Burada tüm trafik brodcast olarak döner.
+Host ---> DHCP Server  =  DHCP discover mesajı gönderir. 
+Host <--- DHCP Server  =  DHCP ofer mesajı gelir. Burada sana istediğin bilgiyi verebilirim mesajı
+Host ---> DHCP Server  =  DHCP request mesajı gönderilir. Benim için bu bilgiler uygundur istiyorum.
+Host <--- DHCP Server  =  DHCP ACK mesajı gelir. server bilgileri gönderir
+Buraya 'DORA Discover Ofer Request Ack' ile hatırlanabilinir.
+Bu paketi bilgisayar gönderirken alıcı cihazın mac'i ve ip'si '0'lardan oluşan bir dhcp paketi oluşturur.
+Server bilgisayara sana şu ip'yi verebilirim yanıtı gelir.
+Bilgisayar evet istiyorumder.
+server 4 bilgiyi ona gönderir.
+cihaza atanan ip sürelidir ve genelde sürenin yarısı dolunca uzatma talebinde bulunur.
+
+Routerde DHCP yapılandırılması
+		Router(config)#ip dhcp excluded-address 192.168.1.1 192.168.1.11
+pool'dan bazı ipleri çıkardık bunun sebebi 192.168.1.1'in default gateway olması ve diğer ipleride elle atama işlemleri için boş kalması
+		Router(config)#ip dhcp pool 'name'
+burada 'name' isimli bir havuz oluşturduk ve içine girdik.
+		Router(dhcp-config)#network 192.168.1.0 255.255.255.0
+network tanımladık
+		Router(dhcp-config)#default-router 192.168.1.1
+gateway tanımladık
+		Router(dhcp-config)#dns-server 8.8.8.8
+dns server tanımlarız
+		Router(dhcp-config)#lease 7
+bir ip ataması olduğunda 7 günlüğüne o cihaza verilecek. 
+		Router(dhcp-config)#lease 0 12
+12 saatliğine atama yapmış olduk
+
+		Router#show ip dhcp binding
+hostlar hangi ip adreslerini almış ve ne kadar süre kiralamış
+		Router#show ip dhcp pool 'name'
+'name' isimli pool'un ayarlarını görebiliriz.
+		Router#show ip dhcp conflict
+2 cihaza aynı ip verilmişmi cevabı
+
+DHCP Relay Agent yapılandırması (Farklı network'de dhcp server varsa)
+dhcp mesajları broadcast olarak haberleştiğini söylemiştik. Routerler broadcast yayını geçirmediğinden routerde bazı ayarlar yapmak gerekir. 
+		Router(config)#int gi0/0
+cihazın bulunduğu porta girdik
+		Router(config)#ip helper-address 192.168.1.100
+bu komut ile dhcp sunucunun adresini tanıttık
+
+Nat (Network Address translation)
+özel ip adresleri internete çıkarken Genel ip adreslerine çeviren sistem.
+İç ağda 200 cihazda olsa internete çıkarken aynı ip adresi üzerinden çıkılır.
+
+
+
+
+
+
+
+
+
