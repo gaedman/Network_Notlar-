@@ -1,0 +1,813 @@
+# Network
+### Network nedir?
+Birden fazla cihazın birbirine veri aktarması (bilgi paylaşımı, yazılım ya da donanım paylaşımı, merkezi yönetim gibi) amaccı ile bağlı olmasına ağ (network) denir.
+
+### İnternet nedir?
+Birçok ağın birbirine bağlanması ile oluşan global ağa internet denir. Buradaki cihazlar birbiri ile iletişim kurmak için TCP/IP protokol kullanır. Bu sayede donanım ve yazılımdan bağımsız olarak cihazlar arası iletişim mümkün olur.
+
+### Cisco
+Dünyadaki internet alt yapısında ve kurumsal ağlarda kullanılan aktif cihazların (router, switch, firewall, IP telefon, IDS&IPS vb.) %80'inden fazlasını Cisco firması tarafından üretilmiştir. 
+
+### Ağ türleri
+##### Local Area Network (LAN)
+Kablolu ya da kablosuz olarak birbirine yakın cihazlarin birbiri ile iletişim kurduğu ortamdır.
+##### Wide Area Network (WAN)
+Farklı konumlardaki bilgisayar ve ağ kaynakları ya da yerel alan ağların birbirine bağlnaması ile oluşan ağdır.
+##### Virtual Local Area Network (VLAN)
+Bir kurum içinde ayrı ayrı mantıksal ağların oluşturulmasıdır. Aynı switche bağlı cihazlardan oluşan bir ağda mantıksal olarak ayrılmış farklı IP ağları ve subnetleri kapsar.
+##### Wireless Local Area Network (WLAN)
+Kablosuz yerel alan ağda verinin aktarımı kablolar yerine radyo dalgaları üzerinden yapılır. Akıllı telefonlar, tabletler, laptoplar ve IoT gibi kablosuz  ağ cihazlarının LAN ve internetle haberleşmelerini sağlar.
+
+### Kablolar
+Kablolar ile veri taşınırken hat içindeki en yavaş neresi ise hattın hızı o olacaktır.
+
+##### Bakır kablolar 
+Hepsinde 8 kablo vardır. Etrafında çelik teller olması farelere karşı önlem olmasını sağlar. 
+Cat 5; 1200 mbps - 100 Hpbs hızı destekler
+Cat 6; 100 Hpbs - 250 MHZ hızı destekler. Kablolar arasındaki plastik kanal ile manyatik alan etkisi azaltılır. 
+Cat 6a; 10 Gbps - 500 MHZ hızı desteklemektedir.
+Cat 7; 10 Gbps - 600 MHZ hızı destekler. Her sarmal çifti alimünyum folyolar ilede sarılarak daha yalıtkan olması istenir. 100 m'den uzun hatlarda veri aktarımı garanti edilmez.
+Cat 8; 40 Gbps - 2000 MHZ hızı destekler. 40 m'den uzun hatlarda veri aktarımı garanti edilmez.
+
+####### Renk sırası
+Renkleri farklı olan kablolar aslında farklı özellikteki kablolardır. Bazı kablolar daha yoğun kullanımlar için olduğundan renkleri farklıdır ve renk sırası vardır. 
+EIA/TIA T568B renk sıra dizilişidir. 
+	Turuncu Beyaz   1
+	Turuncu		2
+	Yeşil Beyaz	3
+	Mavi	 	4
+	Mavi Beyaz 	5
+	Yeşil 		6
+	Kahve Beyaz 	7
+	Kahve		8
+> Ethernet Patch Cable
+Switch ile cihaz arasında bir bağlantı varsa renk sırasının kablonun iki tarafında da aynı olması istenir.
+> Ethernet Crossover Cable
+Cihaz ile Cihaz birbirine bağlanırken kobloların bir tarafı bu sırada olurken diğer tarfında 1-3, 2-6 birbiri ile bağlanır. 
+Yeni nesil cihaz ve Switchlerdeki 'Auto MDIX' özelliği ile düz bağlantı ya da cross bağlantısı olmadanda çalışmasını sağlar.
+
+##### Fiber Kablolar
+Uzun mesafeli yüksek hız/bant genişliği gerektiren yerlerde kullanılır. Veriler ışık üzerinden taşınır. İçindeki her ince kablonun adı 'core'dur(kıl'da denir) ve satın alınırken core miktarı ve tipi (single-multi) önemlidir.
+Fiber kablonun ucuna Gbic modülü takılarak, switch'e takılır. Gbic'ler pahalı olduğundan OEM'lerle daha ucuza heledilebilinir.
+
+####### Single mod
+Uzun mesafelidir. 
+Hızı daha düşüktür
+
+####### Multi mod
+600m-700m gibi daha kısa mesafelidir.  
+Hızı daha yüksektir.
+
+####### POE 
+Bakır kablodan hem elektriğin hemde verinin iletilmesini sağlamktadır. (aktif ve pasif olmak üzere 2 çeşit vardır.)
+
+##### Console kablosu
+Console portundan yönetiilecek ap cihazlarına bağlantı yaparak yapılandırma işlemini yapmamızı sağlar. 
+Bu kablonun kendi driver'ının bilgisayara kurulması gerekmektedir.
+putty ile bağlantı yapılırken cihazın hangi portuna takıldığı önemli olur. Buna bakmak için aygıt yöneticisinden usb bağdaştırıcılarına bakabiliriz. Hangi 'COM' adresindeyse putty'de o değer yazılır.
+
+### Hub
+Ağdaki tüm cihazlara, gelen tüm verileri ileten; ucuz cihazlardır. Ne gönderdiğine, kime gönderdiğine bakmaz.
+
+### Switch
+İletişim yapacağı cihazların mac adreslerini (switch veri gönderirken ip değil mac adresi önemlidir.) tutarak gelen veriyi hangi cihaza göndereceğini bilir. Kime göndereceğini bildiğinden gereksiz yayın trafiğini engeller. Her port birbirinden bağımsız veri alış verişi yapabilirler.
+Switch'e paket gönderildi ve paket switchde kayıtlı olmayan cihaza gidiyorsa; paketin geldiği port hariç hepsine paket gönderir (Broadcast). Paketin geldiği cihazlar ulaşılması gereken cihaz değilse paket silinir. Paketin silinmesi ek trafiği engeller. 
+Switch paketi göndereceği kişiyi bulamaz ise döngüde kalır. Bu işlemin defalarca olması ağın susmasına sebep olur.
+Eski switchler (IP routing yapamayanlar) OSI yedi katman modelinin 2. aktmanında bulunurlar. Yeni switchler (IP routing yapanlar) 3. katmanda da çalışırlar.  
+
+##### Unmanaged Switch (yönetilmez switchler)                                                                                
+Ucuzdur ve kullanılması için prize takılması yeterlidir. 
+Yönetme, izleme cihazlarını desteklemezler, uzaktan ya da consol ile bağlanılamazlar. 
+Cihazdaki sorunlar; cihaz üzerindeki led ışıklardan anlaşılır. (turuncu ise sorun var, yeşil ise sorun yok)   
+Komut arayüzü ya da web arayüzü yoktur. 
+
+##### Web Managed/ Smart Switch (Web yönetilebilir ya da yarı yönetilebilir)
+Switchdeki bazı fonksiyonları web arayüzünden yönetilebilinir. (Vlan, Port Monitor, Link Aggregation)
+Genelde komut arayüzünü ve SNMP yöntemlerini desteklemezler.
+
+##### Managed Switch(Yönetilebilir)
+Komut ve Web arayüzleri (web arayüzü aktif edilmesi gerekir) vardır.
+Console portuna bağlantı ile komut yönetimleri yapılabilinir.
+Merkezi olarak yönetilebilir ve monitör edilebilirler.
+Stack(yığın) destekleyen modelleride vardır. Stack kablosu ile stack portlarının birbirine bağlanması ile 8'e kadar cihaz tek bir switch gibi çalışabilir. 
+	Portlar birbirine bağlarken örnek olarak 3 cihaz olsun; 
+		Cihaz 1'in 'Stack 2' portundan 2. cihazın 'Stack 1' portu stack kablosu ile bağlanır.
+		Cihaz 2'nin 'Stack 2' portundan 3. cihazın 'Stack 1' portu stack kablosu ile bağlanır.
+		Cihaz 3'ün 'Stack 2' portundan 1. cihazın 'Stack 1' portu stack kablosu ile bağlanır.
+Şu özellikleri destekler; SNMP monitoring, Auto MDI/MDI-X portlar (devreye alma ya da çıkarma), Port bandwidth ve duplex control, IP adress managment, MAC address filtering, Spanning Tree, Port mirroring, Quality of service (QoS) (Paketlerin önceliklendirilmesi), Vlan ayarları, 802.1X network access control, IGMP snooping Link aggregation veya turnking  
+ 
+##### Industrial (Endüstriyel) Ethernet Switch
+Genelde yönetilebilirlerdir.
+Dış ortamlardaki kamera, acces point gibi işlerde kullanılırlar.
+Aşırı sıcağa ve soğuğa (-40 ila +70 gibi) dayanıklıdırlar.
+
+##### POE (Power Over Ethernet) Switch
+Tek bir network kablosu ile hem data hem elektrik taşınır. 
+Bağlanılacak cihazların toplam güç tüketimlerinin aşılmaması gerekmektedir.
+  
+##### Şasi switch (Chassis Switch)
+şasi switchlerin slotlarına ihtiyacımıza göre modüller takıp eklenilebilir ve bu modülleri yönetebilmemizdir.
+Takılan tüm modüllerin enerjisi şasi tarafından ortak olarak sağlanmaktadır. 
+Genelde ana şasiye bağlanıp sonrasında modüle girme şeklindedir.
+
+### Router
+iki ağı birbirine bağlayan ya da bir ağı internete yönlendirir. 
+Genelde 2 ip bulunur biri iç network ip ve dış network ip. 
+Routerler başka routerin arkasındaki cihazları göremezler. Eğer iletişim kurmalarını istiyorsak tanıtmamız gerekir.
+ 
+###  Acccess Point 
+Kablolu ağ bağlantısını, kablosuz (wireless) bağlantıya dönüştürür.
+Ayarlandığı takdirde kablosuz ağ sinyalini güçlendirir.
+Access Pointlerin yayınladıkları kablosuz kanal adına SSID denir.
+2.4 Ghz yayınları daha geniş, uzun alana daha yavaş iken 5 Ghz yayınları ise daha dar, kısa mesafeli ve hızlıdır.
+Dış ortamda iki mesafe arası (40-50 km'ye kadar) veri aktarımı yapabilir. Bunu yaparken iki access point arasında engelinin(dağ, tepe, bina, ağaç) olması kaliteyi düşürür.
+
+### IP Camera
+IP kameralar aldıkları görüntüyü kayıt cihazlarına ya da işlemek üzere workstationlara yönlendirir.
+Networke bağlı kameralara uzaktan erişilebilinir ve uzaktan izlenebilirler. 
+ 
+### IP Telefonlar
+Telefon görüşmelerinni dışında, konferans özelliği, sesli mesaj, gelen-giden cevapsız aramalar, çoklu hat kullanımı gibi ek özellikleri vardır.
+Personel yeri değişse bile telefonunu yeni yerindeki telefon ağına bağlanması yeterlidir.
+Bulut santraller ile  dağınık yapısı olan iş yerlerinde birbirleri ile dahili görüşmeleri mümkün olur.
+
+### UTM (Unified Threat Management) Cihazı ya da NGFW (Next Genaration Firewall) 
+Birden fazla internetin yedekliliği
+Saldırılardan korunma
+Virüslerden korunma
+Spam maillerinden korunma
+IP başına kullanılabilecek internet miktarını belirlemek
+Erişilebilecek sitelerin kategori bazlı denetlenmesi
+İnternet uygulamalarının kısıtlanması (skype, torrent oyun, internet radyo, whatsapp ...)
+VPN ile şubeler arası güvenli iletişim
+Network trafiğinin log'larının tutulması
+Bilgi sızıntısı (DLP) engelleme
+Routing (static - dinamic)
+DHCP - DNS
+Not: Vlan'ları NGFW kullanmak bitirmek, network güvenliği için daha iyidir.
+
+### Mac adres gösterimi
+Cisco gibi kimi cihazlarda mac adresleri farklı gösterimleri olabilir bunlara örnek olarak;
+windows: a2:b1:23:c4:aa:25
+Cisco: a2b1.23c4.aa25
+
+# Topolojiler
+### Fiziksel Topoloji
+##### Bus topology
+Bir kablo boyunca tüm terminallerin (sunucular, workstation, printer, server...) doğrusal olarak kablo seğmentine bağlanmasıdır. Bu kablo segmentine Trunk'da denir.
+Sinyal tüm istasyonları kendi başına dolaşır. Her istasyon sinyal adresini kontrol ederek kendine ait olmadığına bakar, değilse pasif sinyal bırakır. 
+Her iki ucunda Terminator (sonlandırıcı) bulunur.
++ Cihazlar sisteme kolay şekilde bağlanabilir.
++ Az miktarda kablo kullanılır  
++ Geçici ağların hızlı bir şekilde kurulabilmesi için iyi
++ Switch, hub gibi cihazların kullanılmamsı ile maliyet azalması
++ Bir istasyon çalışmaması durumunda diğerlerini etkilemez  
+- Sorun kaynağı taspiti, çözümü ve yönetiminin zor olmaması
+- Kablo kopması durumunda tüm ağın çalışmasını engeller.
+- Her eklenen istasyon ağ performansını düşürmesi
+- Tüm kullanıcılara verinin gitmesi
+
+? Ethernetin ilk uygulamaları (Thicknet, Thinnet)
+
+##### Ring Topology
+Pek kullanılmaz. Cihazlar birbiri ile halka oluşturacak şekilde bağlanır. Cihazların arkasında T şeklinde connector bulunur. Connector ile bir uçtan giriş diğer uçtan çıkış sağlanır.
+Tipik örnekler Token Ring ve FDDI’dır. Sinyal ringin etrafında döner.
++ Tüm istasyonlar eşit erişim hakkına sahiptir
+- En pahalı topolojidir
+- Bir cihaz arızalanırsa tüm bağlantı kopar
+- Karmaşık data link katman protokolleri
+####### Dual Ring Topology
+Sinyaller birbirlerine ters yönde hareket eder.
++ Tek ringden daha güvenlidir.
+
+##### Star Topoloji
+Her cihaz ortadaki switch ya da hub'a bağlanması ile oluşan toplojidir. 
++ Yeni istasyonların eklenmsei kolaydır
++ Yönetim ve hata tespiti basittir. Kısa zamanda çözülebilir.
++ cihaz arızasında ya da yeni cihaz eklenmesinde tüm ağ etkilenmez.
+- Çok kablo kullanılır.
+- Switch ya da Hub sorunu ağı etkiler.
+
+##### Extended Star topology
+Omurga switch kullanarak, Birbirinden bağımsız star topolojiler birbirine bağlıdır.
++ Ağın mesafesinin ve alanının genişlemesini sağlar.
++ Arıza olasılığının dağıtılması
+
+##### Mesh topology
+Ağdaki switchlerin diğer switchlere birden fazla bağlantısı vardır. 
++ Bağlantı kopması ya da switch bozulması durumunda sistem diğer alternatifler üzerinden devam eder.
++ Yüksek oranda yedeklilik sağlar.
+
+####### Full- Mesh Topology
+Hiç kesinti istenmeyen uygulamalarda tercih edilir.
+Pahalı ama en ideal topolojidir.
+
+####### Partial-Mesh Topology
+Full mesh’den daha ucuz
+Yedeklilik kısmen sağlanır.
+
+### Mantıksal Topoloji
+Ortama erişim metodlarını tanımlar
+En yaygın olanları : Broadcast ve Token-Passing
+
+# Temel komutlar
+### Ping
+İki cihaz arası bağlantıyı kontrol eder. `ping HEDEF` şeklinde kullanımı vardır.
+Başarısız olursa birçok sebebi olabilir; bunalara windos firewall sorunu olsada kablosal, UTM, NGFW gibi sebebler olabilir. Ping attıktan sonra arp tablosuna bakarak o cihazın ayakta olup olmadığı testi yapılabilinir. 
+Birçok firewall'da UTM, Next Generation Firewall cihazlarında WAN interface'lerinde ping kapalıdır. 
+CİSCO ping atarken 4 yerine 5 paket gönderir ve atarsa '!', atamazsa '.' çıkar. 
+
+##### Ping Parametreleri
+ping -a  
+	hedef IP'deki cihazın adı görüntülenebilir.
+ping -n MİKTAR
+	belirtilen miktar kadar paket ile test edilir.
+ping HEDEF : C:\isim.txt
+	Sonuçları C:\ içindeki isim.txt dosyasına kaydeter.
+ping -t
+	durdurulana kadar sonsuz miktarda paket gönderilir. 'Ctrl + C' komutu ile durdurulur
+	Hatanın nereden kaynaklandığı (Switch Restart, kablo kontrol, sunucu restart...) araştırılmaya başlandığında bu işlem başlar ki yapılan işlem sonucuna göre bağlantının varlığı tespit edilebilinsin.
+	Bağlantı kalitesi ölçmek içinde kullanılır. Hedefe (genelde 8.8.8.8) dakikalarca atılır. Bu esnada genel olarak %2'den fazla ping kayıpları varsa sorun olduğunu gösterir.
+Extended ping 
+	Cisco cihazları desteklediği ping atma şeklidir. 
+	`ping` komutu gönderildiğinde, komut ile alakalalı ayrıntılar sorulur ve bu ayarlara göre ping atılır. Ayrıntı ayarlanmayacaksa `Enter` ile geçilebilinir.
+
+### ARP
+3 yönlü el sıkışma ile cihazlar birbiri ile haberleştiğinde diğer cihazların mac adreslerini 'cache'lerinde tutar. Switch'e bu MAC adresini gönderip ulaşmak istediklerini söylerler.
+sh mac address-table 
+	ARP Cache Cisco cihazlarında Vlan, Mac address, Type, Ports bilgileri gözükür.
+arp -a
+	cache'deki IP cözümlemesini gösterir. Eğer 2dk içinde bir yeni bir IP cözümlemesi olmazsa kendini temizler.
+arp -a IP
+	İlgili IP'nin cache'de tutulan MAC adresini gösterir.
+arp -s IP MAC
+	IPsi verilen MAC adresli cihazı sabitler. 'cache'de sürekli kalır, silinmez.
+
+### Tracert (Cisco kullanımı: traceroute) 
+Hedef ile cihaz arasındaki router'leri gösterir.Böyle hedefe giderken hangi yönlendirmelerle gidildiği tespit edilir. 
+Sorun çözme işlemi içinde kullanılabilinir. 
+cisco'da `traceroute` komutu daha detaylı olarak kullanılabilinir.
+tracert IP
+	 farklı TTL süreleri ile aynı hedefe ICMP paketleri gönderilir. Bu sayede hedef ile aramızdaki yollar kontrol edilir.
+tracert -d [-h Maksimum Hop Sayısı] [-J Hot Listesi] [-w Timeout süresi] [Hedef isim]
+	`-d` geçilen routerlerin adına bakmadan, hızlıca router IP'lerini görüntüler.
+
+# OSI Layer (Open System Interconnection)
+ISO (Internation Standarts Organization) tarafından geliştirilmiş olup iki network cihaz arasındaki iletişimin nasıl olacağını tanımlar. 
+Encapsulation; Verinin application katmanından physical katmana doğru her katmanda katmanın headerini veriye ekliyerek verinin taşınabilir hale getirilmesidir.  
+Decapsulation; Verinin physical katmanından application katmanına doğru her katmanın headerlerini açarak gelen verinin uygulama olrak gözükmesini sağlamak.
+
+### Physical (Fiziksel)
+Verilerin ağ kabloları aracılığıyla, elektrik sinyalleri olarak iletimidir.
+Veriler bit olarak iletilir.  
+
+### Data link
+Verilerin elektronik medya üzerinde nasıl iletileceği ya da medyaya nsaıl konulacağını belirler. Bu katmanda verilere data frame denir.
+Switchler, mac adresi kayıt, Frame erişim konrolleri, Ethernet bu kısımda bulunur.
+Veri hattı katmanında veriler network ya da fiziksel katmana gönderilirler. Bu parçalara paket ya da frame denir.
+Frameler; verileri belli bir kontrol içinde göndermeyi sağlayan paketlerdir.
+
+### Network
+Network bağlantısını düzenlemek, devam ettirmek, sonlandırmaktan (routing) sorumludur. Routerlerin ve IP adreslerinin olduğu kısımdır.
+2 tip paket kullanılır:
+	Veri paketleri
+	Yönlendirme paketleri
+Veri paketleri kullanıcı bilgisini taşımada kullanılır. Paketler IP ve IPX gibi yönlendirilebilir paketlerle taşınır.
+Yönlendirme paketleri ise ağdaki routerleri güncellemek için kullanılır. RIP, EIGRP, OSPF.. gibi protokoller bu işlevi yerine getirir. Yapılan ana işlem router üzerindeki routing tablolarını güncelleştirmektir.
+
+### Transport
+Verinin nasıl taşıncağına (TCP, UDP, ICMP...) karar verilen kısımdır.  
+Veri alış-verişi yapılırken düzenli olarak birbirini kontrol eder. Gönderilen veri kontölü 'acknowledgment' işelmi ile yapılır. Onayı beklemeden gönderilen veri miktarına 'window' denir. Windowing işlemi aygıttan diğer aygıta ne kadar veri aktarıldığını kontrol eder.
+
+##### TCP
+Genelde verilerin taşındığı; gönderenin sürekli, karşı tarafdan veri ulaşdı mesajını beklemektedir.
+Veri gönderim hızı daha düşük olsada eksiksiz olması için kullanılır.
+##### UDP
+Genelde ses-video paketlerini taşımak için kullanılır. Küçük kayıplar burada önemsizdir. Büyük dosyaların kesin olması umursanmadığı durumlarda kullanılır. 
+##### ICMP
+Genelde komutların taşınması için kullanılır. 'Ping' gibi komutlarda kullanılan paketlerdir.
+##### Portlar
+65536 port vardır. Bunlar verinin aktarılması için gidebileceği farklı yollar olarakda düşünebiliriz.
+http   --- TCP 80
+https  --- TCP 443
+pop3   --- TCP 110
+smtp   --- TCP 25 (Türk telekom değiştirmişti)
+ftp    --- TCP 21
+telnet --- TCP 22
+Uzak Masaüstü --- TCP 3389
+
+### Session (oturum)
+Sistemler arasındaki iletişimin başlatılmasını ve sona erdirilmesini sağlar. 
+Bağlantı kurulması, login işlemleri, dosya transferleri.
+> SQL, RPC, NFS
+##### Cisco protokolleri
+NFS (Network File System): TCP/IP ve Unix iş istasyonları kullanılır.
+RPC (Remote Procedure Call): İstemci/Sunucu yönlendirme protokölü.
+ASP (Apple Talk Sesion Protocol): Apple talk istemcileri ve sunucu bilgisayarları arasında iletişim kurmak için kullanılır.
+
+### Presentation (sunuş)
+Kullanıcı uygulaması için verinin yapısını ve biçimini düzenler.  
+Sıkıştırma, açma, işleme.
+> ASCII, JPEG, MPEG, GIF, MIDI, AVI...
+ 
+### Application (uygulama)
+Uygulamaların veriyi kullanıcıya gösterdiği yerdir.
+> FTP, HTTP, WWW, SMTP, TELNET, DNS...
+
+
+# Connection-Oriented (Bağlantı-Temelli) Protokoller
+Veri iletilirken akış ve hata kontrölü yapan protokollere denir. Veri gönderilmeden önce bağlantı tesis edilmelidir.
+Bağlantı sağlanır - Veri transfer edilir - Bağlantı sonlandırılır
+Bağlantısız protokollere ise bir yol tanımlanmaz. Paketlere 'datagram' denir. IPX ve IP protokolleri bağlantısız protokollerdir. 
+Bağlantı temelli protokoller daha güvenli olsada; bağlantı sorununda network durur. Bağlantısız servisler ise verinin iletilmesini engellemezler.
+
+# Cisco Üç Katmanlı Hiyerarşik Modeli
+Büyük ve hiyerarşik ağları tasarlamak ve uygulamak içindir. Her katmanın görevi farklıdır.
+
+### Core Layer (çekirdek katman)
+Hiyerarşik yapının tepesidir. Amacı trafiği hızlı ve güvenilir bir şekilde aktarmaktır.
+Bu katmandaki sorun tüm katmanları etkiler. FDDI gibi hızlı bağlantılar yapılır.
+
+### Distribution Layer
+Core katmanı ve Access katmanının, en kısa toldan iletişimini sağlar. Ana görevi routing, filtreleme, WAN erişimi ve paketlerin access katmanına erişimini belirlemektir.
+* Erişim listeleri, paket filtreleme ve sıralama gibi işlemler.
+* Adres dönüştürme gibi güvenlik ve network ilkeleri. 
+* Vlanlar arasında yönlendirme. 
+* Broadcast ve multicast domain'leri domain'ler arasındaki tanımlamalar.
+
+### Access Layer
+Kullanıcıların ağ kaynaklarına erişimini kontrol eder. Network'un bölümlenmesi (segmentation) yapılır. 
+
+# Broadcast ve Collision Domain
+Hublar aynı anda sadece 1 cihaz ile iletişim kurabilirler. Eğer birden fazla cihaz aynı anda veri göndermeye çalışırsa çakışma (collision) oluşur. 
+* Bundan dolayı her hub collision domain'i simgeler.  
+Switch'ler mac adresini tutar ve paketi yalnızca hedefe gönderir.
+* Bundan dolayı switch'in her portu bir collision domaindir.
+Broadcast domain'ler router'lerin ayırdığı her bir farklı IP subneti için kullanılır. Routerler broadcast'i geçirmezler.
+* Bundan dolayı router'lerin her bağlantısı bir broadcast domaindir.
+
+(Not alttaki bilgi görselleşse iyi olur)
+		     Hub	Repeater    Switch     Bridge	Router
+Collision Domain;    Geçirir	Geçirir	      X	         X	  X
+Broadcast Domain;    Geçirir	Geçirir	    Geçirir    Geçirir	  X
+ 
+### Network Cihazlarının Tespiti
+Ağımızdaki cihazların tespiti ve yine bu cihazların diğer cihazların tespiti çeşitli protokollerle olur.
+Cisco cihazlarda birbirini CDP (Cisco Discovery Protocol) ile tespit ederler. Tüm cisco cihazlarında default olarak açık durumdadır.
+Diğer tüm ağ cihazları da LLDP (Link Layer Discovery Protocol) protokölü ile tespit ederler.
+ 
+# IP
+### IP address
+Cihazın ağdaki kimlik numarasıdır.
+
+### Subnet mask
+Bir ağın ne kadar büyük olacağını belirler.
+Subnet mask'deki '0' a karşılık gelen alan değişebilirdir. Buda o ağa 65536 IP verilebilir olur ama diğer ağlarda bu ağlar kullanılamaz.
+subnet mask değeri binary (2'li) olarak yazıldığında 1'ler ve 0'lar yan yan olmalıdır. Bundan dolayı bir ağı alt ağlara bölerken 2^n işlemi ile böleriz. Buna örnek olarak 6 parça olacaksa biz 8'e böleriz.
+
+##### CIDR gösterim
+X.X.X.X/a buradaki 'a' bizim subnet mask'da bulunan 1 miktarıdır.
+
+### Default gateway (ağ geçidi)
+Genelde ilk (X.X.X.1) ya da son ip'yi veririz. 
+Router'lerin ağa bakan bacağıdır. 
+
+### DNS 
+İnternete çıkmadan önce gidilecek yer. Bura ile url filterde yapılabilinir.
+
+# Network ID
+Network ıd'si aynı olan cihazlar birbiri ile haberleşebilir..
+Cihazın ip adresi ile subnet mask'ı binary şeklindeyken 'and'(matematiksel çarpma) işlemi yapılır ve çıkan sonuç cihazın network ıd'sidir.
+
+Örnek:
+	Cihaz 1; IPv4: 172.16.16.126 --- Subnet mask: 255.255.255.128
+	Cihaz 2; IPv4: 172.16.16.129 --- Subnet mask: 255.255.255.128
+ip:		10101100.00010000.00010000.01111110 --- 10101100.00010000.0001000.10000001
+subnet mask:	11111111.11111111.11111111.10000000 --- 11111111.11111111.1111111.11111111
+Network ID:	10101100.00010000.00010000.00000000 --- 10101100.00010000.00010000.1000000
+Network ID:	172	.16	 .16	  .0	    --- 172	.16	 .16	  .128
+Yukarıdaki 2 cihaz farklı network Id'lerine sahiptirler yani iletişim kuramazlar.
+
+# Network'ün Subnet'lere bölünmesi
+
+Örnek;	192.168.10.0/24 networkünü 3 subnete bölünüz.
+Adım 1) Yeni Subnet Mask = 2^n >= 3 ;n = 2; 2^2=4 subnet olacak. Yeni Subnet Mask = eski + n = 26 CIDR; Yeni Subnet Mask = 11111111.11111111.11111111.11000000 = 255.255.255.192
+Adım 2) Network Id = 2^6= 64; Bu bulunan değer artış miktarıdır. Subnet mask'da bulunanen soldaki '0'dan '.'ya kadar bulunan'0' miktarına 'a' dersek, 2^a şeklinde hesaplanır.  
+Adım 3) Subnetler;	Network ID;	ilk IP;		  son IP;	   Broadcast
+	1. subnet;	0		192.168.10.1	  192.168.10.62	   63
+	2. subnet;	64		192.168.10.65	  192.168.10.126   127
+	3. subnet;	128		192.168.10.129	  192.168.10.190   191
+	4. subnet;	192		192.168.10.193	  192.168.10.254   255
+> ilk subnet ilk IP yazılır. Sonrasında ilk subnet ilk IP değerine Network ID eklenerek 2. subnet ilk IP'si bulunur. 3. ve 4. subnet'in ilk IP'leride böyle bulunur.  
+> Sonrasında Network ıdler yazılır.
+> Sonrasında Broadcast'ler yazılır. Bunun için en sonuncuya 255 yazıp, network ıd kadar düşülebilir ya da sonraki subnet network id'nin bir eksiği olur.
+> En son olarak son ip değeri girilir. son ip değeri broadcast'in bir eksiğidir.
+Burada 64'lük ip adreslerine bölündü. Biri network ıd, biri broadcast yayını, biri ağ geçidine (genelde network id'nin sonrasındaki) verilir.
+> Her subnet mask IP sayısı = Network ID - 2 = 62 IP
+> Toplam IP = 4 x 62 = 248 IP
+(192.168.0.0/19 olsaydı; 19 =11111111.11111111.111'00000'.00000000 için a değeri 5 olur. ve ikinci ip'de 192.168.32.1 olurdu. 2^13 - 2= 3313 ip'si olurdu.) 
+
+Örnek; 172.20.20.33 ip'li, 255.255.225.224 subnet mask'lı cihazın bulunduğu ağa başka bir cihaz ekleyeceksek. 
+256 - 224 = 32 IP; Ağ 32'li IP grupları halindedir.
+Network ID 0,32,64,96... şeklinde olmalı.
+33 ip'ye sahip olduğundan 32-63 (kullanılabilir ip'ler 33-62) arasında olan cihazlar birbiri ile iletişim kurabilir.
+
+### IP sınıfları
+##### Loodback adress
+##### Apipa adres
+
+
+### VLSM 
+Network'ü ihtiyaçlarına göre subnet'lere ayırmaktadır. 
+Çok kullanılan subnetler
+/24 = C class ; 255.255.255.0
+/30 ; 255.255.255.252 = 4 IP subnet; X.X.X.0 router id, X.X.X.1 ve X.X.X.2 Host (kullanıcı) ipleri, X.X.X.3 broadcast. Sonrasında sıra ile tekrar eder.(X.X.X.4 router id, X.X.X.5 ve X.X.X.6 Host (kullanıcı) ipleri, X.X.X.7 broadcast)
+
+Örnek; 192.168.100.0/25 IP yapısı olan Merkezden 3 şubeye Ip planlanması istenmekte. C şubesi 53 personel, B şubesi 28 personel, A şubesi 5 personel çalışacaktır. 
+/25 olduğundan Merkez 128'lik (0-127 arası IP'ler). Dolayısıyla bizim başlangıç Network ID'miz 128 olur.
+En çok personel çalışıcak yer C şubesi 53 kişi olduğundan 64'lük parçalara bölebiliriz.
+128 router, 129-190 host, 191 broadcast olacaktır.
+C şubesi için; Network ID :   192.168.100.128/26
+	       Başlangıç IP : 192.168.100.129
+	       Bitiş IP :     192.168.100.190
+	       Broadcast IP:  192.168.100.191
+B şubesinde 28 kişi olacakmış. 32'lik parçaya bölebiliriz. 192.168.100.192 başlangıçtır.
+192 router, 193-223 host , 224 broadcast olacaktır.
+B şubesi için; Network ID:   192.168.100.192/27
+	       Başlangıç IP: 192.168.100.193
+	       Bitiş IP:     192.168.100.222
+	       Broadcast IP: 192.168.100.223
+A şubesinde 5 kişi olacak. 8'lik parçaya bölebiliriz. Başlangıç IP'miz 192.168.100.224'dür.
+224 router, 225-230 host, 231 braodcast. 
+A şubesi için; Network ID:   192.168.100.224/29
+	       Başlangıç IP: 192.168.100.225
+	       Bitiş IP:     192.168.100.230
+	       Broadcast IP: 192.168.100.231
+
+### ClassFull - Classless IP Adres
+IP adreslerin belirlediği Subnet mask değerleri vardır. 
+RIP, IGRP gibi protokoller Classfull protokollerdir ve subneti otomatik olarak 255.0.0.0 alırlar. 10.10.10.X/24 olsa bile /8 alırlar ve buda sorunlara sebeb olur. 
+OSPF, EIGRP gibi protokoller Classes'dir. Bunlarda 10.X.X.X/24 işlemini tanırlar. 
+
+### Broadcast, Multicast, Unicast
+
+### 3 Way HandShake
+
+### Temel Switch Komutları
+##### Modlar
+####### User-Exec Mode (Kullanıcı modu)
+Switch'in komut arayüzünün normal halde açılmış halidir.
+Çıktısı 'Switch>' şeklinde olur.
+	Switch>?	
+Komutu ile kullanılabilecek komutları bize listeler.
+	Switch>komut ?
+Komutdan sonra yazılabilecek diğer komutları listeler.	
+####### Priveleged-Exec Mode (Yetkili Mod)
+	Switch>enable
+komutu ile yetkili moda geçilir. Yetkili moda geçildiğinde 'Switch#' şeklinde çıktılar olacaktır. 
+####### Global Configuration Mode
+	Switch#conf t
+	Switch#configure terminal
+moddan çıkmak için 'disable'
+komutları ile priveleged moddan global configuration moda geçiş yapabiliriz. 'Switch(config)#' şeklinde çıktılar olur.
+Cihaz ayarlarını yaptığımız bölüm.
+####### Line Console Komutu
+	Switch(config)#line console 0
+	Switch(config-line)#
+komutu ile konsol ile giriş amacıyla yapılır.
+####### Exit
+exit komutu ile bi önceki moda (yetkilendirmeye dönülür)
+
+##### Komutlar
+switch ya da router olması kafa karaşırmasın
+####### Kaydetme ..?
+	Router>write
+	Router(config)#do write
+	Router#copy running-config startup-config
+ayarları yaptıktan sonra cihaz kapanana kadar geçerlidir ama biz kalıcı olabilmesi için kaydetiyoruz.
+####### Hostname Ayarlama
+Switch'in ismini değiştirerek sonrasında karışmamasını sağlamakta.
+	Switch(config)# hostname SW0
+	SW0(config)# 
+####### Banner Komutu
+Açılış ekranında giren kişiyi karşılayan yazı yazmak için kullanılır.
+	Switch(config)# banner motd 0 Izinsiz giris yapmayiniz 0
+####### Password
+Switch açılırken herkes girmesin diye buradan şifre koyulabilinir.
+	Switch(config-line)#password cisco
+####### Switche IP Verme
+Switchlere uzaktan erişebilmek için IP adresi veririz. Switchlerde default olarak Vlan1 olarak gelir.
+Switch(config)#interface Vlan 1
+Switch(config-if)# ip address 10.0.0.3 255.255.255.0
+Switch(config-if)# no shutdown
+####### Cihazın ayarlarını görme
+	Switch#show running-config
+	Switch#show startup-config
+running şuan çalışmakta olan komutlar bunları 'write' komutu ile startup config içine kaydedebiliriz. cihaz kapanıp açılırsa (örnek elektrik gidebilir, fişi çekilebilir...) eski running config silinecek ve üzerine startup config gelecektir. Bundan dolayı kayıt etmek önemli.  
+Burda önemli olan 'Hostname,interface(bacaklarında ip adresi, veri alış verişi aynı anda yapabilirmi,ağ hızı, açık-kapalı olduğu), '
+Not: Half duplex; veriyi gönderirken alamam ya da veriyi alırken gönderemem. 
+     Full duplex; veriyi gönderirken alabilir, alırken gönderebilir. 
+     Duplex auto; karşıdaki cihaza göre kendini half'e ya da full'e ayarlar.
+####### Komutu iptal etme
+Komutun başına 'no' yazmak yeterlidir.
+####### Bacağa giriş yapma ve ayarları
+	Router(config)#interface gigabyte 0/1
+'gigabyte 0/1' bacağın içine girdik.
+	Router(config-if)#no shutdown
+bacağı erişimini açtık
+	R1((config-if)#ip add IPv4 SubnetMask
+	R1(config-if)#ip add 192.168.1.1 255.255.255.0
+Ağın ilk ip'sini genelde router'ın ağa bakan bacağına veririz. 
+####### Router'ın arkasındaki ağı başka routere tanıtma
+	R1(config)#ip route AgIpv4 SubnetMask Router2Ipv4
+	R2(config)#ip route 192.168.3.0 255.255.255.0 1.1.1.2
+Bu işlem yapıldığında R1 routeri R2 (1.1.1.2 ip'li) roterinin arkasında 192.168.1.0 ağının olduğunu bilmesini sağlar.
+######## TFTP sunucuya ayarları yedekleme
+	R1#copy running-config tftp:
+	Address or name of remote host []? ServerIp
+	Destination filename [R1-confg]? DosyayaVerilecekIsim
+Not: TFTP serverler cihaz yazılımın ya da içine yüklenen uygulamaların şimdiki ve sonraki yükeleme dosyaları bulunur. 
+######## TFTP sunucudan kayıtlı ayarları çekme
+Öncelikle cihazın sistemle haberleşmelidir. Yani ip ve ağ geçidi şart.
+Switch;
+	en
+	conf t
+	int vlan 1
+	no sh
+	ip add IPv4 SubnetMask
+	exit
+	ip default-gateway AgGecidi (routerin ağa bakan bacağının değeri)
+	exit
+	copy tftp: running-config 
+	Address or name of remote host []? ServerIP
+	Source filename []? DosyaAdı
+	write
+DosyaAdı adlı yedeği cihaza geri yükledik.
+Router;
+	int gig 0/3/0
+	ip add RouterIP (1.1.1.34)
+	no sh
+	ip add RouterIP SubnetMask
+	exit
+	ip route 10.6.1.0 255.255.255.0 1.1.1.6
+router sunucunun olduğu ağı tanıtmaksak sunucu ile haberleşemez
+	copy tftp: running-config 
+	Address or name of remote host []? ServerIP
+	Source filename []? DosyaAdı
+bacaklara girip 'no shut' yapmak gerekebilir. int gig port; no shut
+	write
+
+####### Örnek yapılandırma 
+en
+conf t
+	cihazda yapılandırma ayarları yapılacağından modu değiştirdik
+host kat_1 
+	Cihaza isimlendirme yapıldı. isimlendirme daha sonradan cihaza bağlantı olduğunda hangi konumdaki switch olduğunu bilmek için önemlidir. SSH 
+enab sec cisco
+	'cisco' şifresini verdik. Böylece enable moda girerken şifre soracak. SSH için gereklidir.
+ip domain-name cisco
+	Domain ismi tanımlanır. Bu isim ssh ile uzak bağlantı kurmak için gerekli.
+service password-encryption
+	daha önceden atanmış olan şifre tekrar görüntülendiğinde cleartext (cleartext: cisco; encryption: 931992132 gibi) olarak gözükmemesini sağlar.
+crypto key generate rsa
+	SSH için sertifika üretir. SSH sertifika üretirken domain name ve host name bilgilerini kullanır.
+1024
+	Sertifika kaç bitlik olacağı
+username sinan pri 15 pas cisco
+	kullanıcı (ID: sinan,Pas: cisco,privilege 15) oluşturma
+	privilege Level 15 (default): Full Access to all commands, such as the "Reload" command, and the ability to make configuration changes.
+	privilege Level 1: Read-only, and access to limited commands, such as the "Ping" command.
+line vty 0 4
+	Aynı anda 5 kişi girebilir.
+login local
+	local girişlerde username+password 
+transport input all
+	ssh bağlantısına izin verdik. 3 seçenek var 1- ssh 2- telnet 3- all (telnet+ssh)
+exit
+	vty ayarlarından çıkıp config mode döndük
+ip ssh versiyon 2
+	versiyon 2 daha güvenlidir
+ip ssh authentication-retries 4
+	4 kez hatalı giriş yapılabilir
+ip ssh time-out 30
+	30 saniye komut girilmezse oturum sonlandırılır.
+
+##### Dynamic Routing
+A noktasından B noktasına veri'nin geçeceği yolu seçer.
+- Distance V.P.; A'dan B'ye minimum MİKTARDA router seçer. RİP (küçük sistemlerde yayğın), IGRP Bu yolu seçerler.
+- LinkStole; A'dan B'ye minimum SÜREDE gideceği yolu seçer. OSPF (büyük sistemlerde yayğın), IS-IS Bu yolu kullanır.
+- Hybrid; Karışık kullanır. EIGPR bu yolu kullanır.
+
+####### RİP 
+Peş peşe (router-router-router...) 15 router atlayabilir, 16. ile ilk router birbirini tanıyamaz.
+V1
+Broadcast ile routerler arası iletişim kurar. 
+Classfull'dur.
+V2
+Multicast ile routerler arası iletişim kurar. 
+`no auto summry` komutu ile Classless olur. 
+	en
+	conf t
+Daha öncesinden networklerin routerin bacaklarına tanımlanmış olması gerekir.
+	router rip
+rip'e giriş
+	ver 2
+
+	no auto 
+
+	network 1.1.1.0 
+	netw 10.19.1.0
+	netw 10.19.2.0
+routerin bağlı olduğu ağların network ıd'ler yazılır. 
+	pass gi 0/1
+	pass gi 0/2
+routerin ayaklarına bağlı bacaklar anons edilir. (gi 0/1 = 10.19.1.0; gi 0/2 = 10.19.2.0)
+
+####### sh ip route
+Router'in hangi networkleri bildiğini gösterir.
+	R       10.6.1.0/24 [120/1] via 1.1.1.6, 00:00:10, GigabitEthernet0/3/0
+üsteki gibi bir çıktı verir. Baştaki harf (R = Rip) neyle öğrendiği. 1.1.1.6'nın arkasında 10.6.1.0/24 ağın olduğu bilmekte. [120/1] burada en kısa (en küçük değer) yol seçilir. 
+
+
+Not: Multicast sadece kendinden bilgi bekleyenlere bilgiyi iletir. Broadcast ise herkese gönderir.
+Not: Merkezi switch varsa ve etradında routerler varsa; bu routerler birbirini tanıtılması durumunda haberleşme sağlanır. Birbirlerini tanıdıklarından merkezi switch'in ağ geçidi önemsiz olur.
+Not: Bir sistemin ağ geçidi router olmalıdır.
+Not: Network ıd'si farklı olan bir cihaza paket gönderilirken router'in ağa bakan bacağına yani ağ geçidine gider. Örneğin 172.X.X.X ip'li cihaz 192.X.X.X ip'li cihaza ping atarken farklı network ıd olduğundan ağ geçidine gider. 
+Not: şifremiz switch ayarlarında şifrelenmiş gözükse bile bunu 'cisco password 7 decrypt' yapan bir siteye yapıştırınca değeri verir.
+Not: Aynı switch'in farklı portlarını gruplar haline getirmek ve sanki o grup ayrı bir swichdeymiş gibi çalışmasına Vlan deriz.
+Not: cmd'den 'telnet ip'  ya da 'ssh -l username' komutları ile bağlantı isteği atılır.
+Not: yanlış bir ayar yapıldığında switch '#reload' yaparak kaydetilmemeiş ayarların kaybolması sağlanabilir.
+Not: Switch'de Vlan 1 silinemez ama ip ataması yapmıyarak kapalı durumda kullanılabilinir.
+Not: Bir router olmayan bir ağı anonslamaz.
+
+Soru: MPLS nedir?
+Router'in arkasındaki yapıyı diğer routerlere bildirmek yerine, router'in benim arkamda bu ağ var demesidir. Arkasındaki ağa yeni bir network eklendiğinde routerin tekrar arkasındaki ağları dışarıya bildirmesi gerekir.
+
+
+{ 
+
+Ders6_14-11-2022
+59:36
+Kalındı
+
+Ders7_18-11-2022
+yok
+
+}
+
+### Switch
+	Switch(config)#line con 0
+	Switch(config-line)#password cisco
+console portuna girip oraya 'cisco' şifresini atadık. Böylece consol bağlantısı olursa şifre istenecek.
+	login 
+login ile sadece şifre istenecek. `login local` dersek username ve şifre isterdi.
+	Switch(config-line)#Banner motd @
+	Enter TEXT message.  End with the character '@'.
+	****************************************************************************************
+	*******************        LUTFEN DIKKAT ONEMLI UYARI        ***************************
+	*******************     BU CIHAZA YETKINIZ YOKSA GIRMEYIN    ***************************
+	****************************************************************************************@
+@ işaretinden @ işaretine kadar olan kısmı cihaza baglantı yapılmaya basladıgında, en üste gözükecek kısım.
+####### Vlan
+Rom bellekte ayrı olarak klasörde tutulur. Silmek için 'delete flash:vlan.dat' komutu ile vlanların oldugu dosya silinir.
+	SW1(config)#vlan 20
+vlan  20 oluşturup girdik
+	SW1(config-vlan)#name OGRETMENLER
+vlan 20'ye isim verdik
+	SW1(config-vlan)#exit
+	SW1(config)#interface  fastEthernet 0/1
+Switch bacagına girdik
+	SW1(config-if)#sw mode access 
+acces mod olsun dedik.
+	SW1(config-if)#sw acc vlan 10
+bacagı vlan 10'a üye yaptık. 
+	SW1#show vlan 
+vlanları ve hangi portların o vlanda olduğunu görüntüledik.
+	ip routing
+layer 3 switch'i router görevi yapabilmesini sağladık	
+	interface vlan 10
+	no shut
+	ip add 192.168.10.1 255.255.255.0
+	exit
+Switchde routering ayarı yaptık
+	sw trunk encaptration dot1x
+Layer 3 switch için trunk işlemini hangi methot ile yapacağını seçtik 	
+	switch mod trunk
+Layer 2-3 switch için portu trunk ettik
+	show int trunk
+trunk bacaklarını görüntüledik
+	show ip interface brief
+vlan ve portlardaki ip'leri gösterir. portlar ve protokoller çalışırmakta mı kontrolü
+
+Not: Swich portlarına normalde ip verilemez ama layer 3 swichlerde portun içine girip `no sw` yazarsak, o port artık router portu olacaktır.
+Not: Router(config)#int gi 0/1.10
+komutu ile routerde belli portun altında vlan ayarlanmasını yapar. Burada gig0/1 bacağın içindeki vlan 10 kısmı açılır. 
+encapsulation dot1Q 10
+bu komut olmadan vlan10 (vlan 11 için dot1Q 11...) için ip verdirmez.
+
+
+
+##### VTP (Virtual Trunking Protocol) 
+Merkezdeki switch vlan merkezi olarak atanabilir. Kenar switchlerden merkezdeki swichlerden git vlan değerlerini al diyebiliriz. Merkezdeki vtp server olan switch'e vlan eklenirse diğerlerinede eklenir.
+3 modu vardır;
+	- vtp mode server; kat swichleri buradan vlan bilgisini alır
+	- vtp mode client; kenardaki swich'e girilmesi durumunda bu switch'de artık vlan oluşturulamaz. Sadece serverdeki vlan'ları alır.
+	- vtp mode transparent; vtp mode'dan bağımsız olarak çalışır. Yani client ya da server olarak çalışmaz. Üstündeki ya da altındaki switchler vtp olup olmamasını etkilemez. (Üstünde server olsun altında client olsun; server client'e vlan gönderirken transparent'i görmezden gelir.)
+
+### DHCP
+cihazların sunucudan otomatik olark ip,subnetmask,dns,default gateway almasını sağlar. Bu verilen değerler 1 hafta gibi bir süreliğine atanır. Bu sürenin yarısında cihazlar tekrar istek atarak kalan sürelerini uzatırlar.
+Bunu yapanlar ev modemi, firewall, router, layer3 swich, microsoft server gibi birçok cihaz dhcp server görevigörebilir ama log kayıtları kolay alınabilmesi için genelde windows server kullanılır. (firewall'da da log kaydı almak kolaydır)
+Wireless bağlantı için genelde 8 saatlik kiralama vardır. Personel için daha uzun süre kiralama süresi mantıklı olabilir.
+
+ip dhcp pool Name
+network İPv4 Subnet
+	hangi aralıkta dağıtması gerektiği
+default-router DefaultGateway
+	ipv4 adreslerinin bulunması gereken default gatewayi
+dns-server 192.168.50.2
+	network'ün dns serveri
+exit
+ip dhcp excluded-address 192.168.100.1 192.168.100.10
+	hangi ip'lerin dağıtılmayacağı buradaki ip'ler sabit ip verilmesi gerektiğinde kullanılabilmesi için ayrıldılar.
+
+Router için
+int gi0/1.10
+ip help 192.168.100.2
+	belirli bacağın altındaki, belli bir vlanda ip helper komutu yazılır
+
+
+örnek yapılandırma L3 Swich(Routing+dhcp)
+
+en
+conf t
+host SW1
+vlan 50
+vlan 100
+vlan 200
+exit
+int ran fa 0/1-10
+sw mod acc
+sw acc vlan 100
+exit
+int ran fa 0/11-20
+sw mod acc
+sw acc vlan 200
+exit
+int gi 0/1
+sw mod acc
+sw acc vlan 50
+exit
+ip routing
+int vlan 50
+no sh
+ip add 192.168.50.1 255.255.255.0
+exit
+int vlan 100
+no sh
+ip add 192.168.100.1 255.255.255.0
+exit
+int vlan 200
+no sh
+ip add 192.168.200.1 255.255.255.0
+exit
+ip dhcp pool VLAN100
+network 192.168.100.0 255.255.255.0
+default-router 192.168.100.1
+dns-server 192.168.50.2
+exit
+ip dhcp excluded-address 192.168.100.1 192.168.100.10
+ip dhcp pool VLAN200
+network 192.168.200.0 255.255.255.0
+default-router 192.168.200.1
+dns-server 192.168.50.2
+exit
+ip dhcp excluded-address 192.168.200.1 192.168.200.10
+
+
+
+
+Not: dhcp logları 1 hafta gibi süre tutulur. Bu durumda sorun yaşanmamsı için loglar günlük olarak yedeklemek işe yarayabilir.
+
+
+
+
+Not: DTP (Dynamic Trunk Port) switch portuna trunk girilirse karşıdaki switch ya da router farklı paketler geldiğinden karşıdaki cihazdaki port'u trunk'a çeker. Bu durum güvenlik açığı oluşturacağından, DTP kapatılması önerilir.
+Not: acces portdan 1 vlan geçeceğini, trunk porttan birçok vlan geçiceğini belirtir. Acces çalışan kişiye verilebilirken, trunk uplink, firewall, server gibi yerlere uygundur.
+NOT: 1 port sadece 1 vlan'a üye olabilir.
+	SW1(config)#int range  fastEthernet 0/2-10
+2. ile 10. dahil olacak şekilde tüm portlara girilir.
+	SW1(config)#int ran fa 0/1-3, gi 0/1-2
+fastethernetin 1-2-3 ve gigabyte'in 1-2 portlarına girer 
+Not: Kat switchinde layer 2, omurgaswitch'de layer 3 kullanılması mantıklıdır.
+Not: 
+	no ip http server
+	no ip http secure-server
+http kapatma
+
+
+
+
+
+
+
+
